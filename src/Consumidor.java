@@ -18,22 +18,24 @@ public class Consumidor implements Runnable {
     public synchronized void run() {
         Random random = new Random();
 
-        while (VisualizacaoBuffer.consumidoresVivos[idConsumidor - 1]) {
-            try {
-                semaforo.acquire();
-                int posicao = random.nextInt(5);
-                if (VisualizacaoBuffer.buffer[posicao] != 0) {
-                    setButtonText("Consumidor " + idConsumidor + " consumiu " + VisualizacaoBuffer.buffer[posicao] + " na posição " + (posicao + 1));
-                    VisualizacaoBuffer.buffer[posicao] = 0;
-                } else {
-                    setButtonText("Posição " + (posicao + 1) + " vazia ; Consumidor: " + idConsumidor);
+        while (true) {
+            if(VisualizacaoBuffer.consumidoresVivos[idConsumidor - 1]) {
+                try {
+                    semaforo.acquire();
+                    int posicao = random.nextInt(5);
+                    if (VisualizacaoBuffer.buffer[posicao] != 0) {
+                        setButtonText("Consumiu " + VisualizacaoBuffer.buffer[posicao] + " na posição " + (posicao + 1));
+                        VisualizacaoBuffer.buffer[posicao] = 0;
+                    } else {
+                        setButtonText("Posição " + (posicao + 1) + " vazia");
+                    }
+                    setBuffer();
+                    Thread.sleep((long) (Math.random() * 1000));
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                } finally {
+                    semaforo.release();
                 }
-                setBuffer();
-                Thread.sleep((long) (Math.random() * 1000));
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            } finally {
-                semaforo.release();
             }
         }
     }
