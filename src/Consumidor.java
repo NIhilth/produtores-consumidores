@@ -3,9 +3,9 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 public class Consumidor implements Runnable {
-    private int idConsumidor;
-    private Semaphore semaforo;
-    private JLabel label, bufferText;
+    private final int idConsumidor;
+    private final Semaphore semaforo;
+    private final JLabel label, bufferText;
 
     public Consumidor(int idConsumidor, Semaphore semaforo, JLabel acaoConsumidor, JLabel buffer) {
         this.idConsumidor = idConsumidor;

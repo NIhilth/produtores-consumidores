@@ -3,9 +3,9 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 public class Produtor implements Runnable {
-    private int idProdutor;
-    private Semaphore semaforo;
-    private JLabel label, bufferText;
+    private final int idProdutor;
+    private final Semaphore semaforo;
+    private final JLabel label, bufferText;
 
     public Produtor(int idProdutor, Semaphore semaforo, JLabel acaoProdutor, JLabel buffer) {
         this.idProdutor = idProdutor;

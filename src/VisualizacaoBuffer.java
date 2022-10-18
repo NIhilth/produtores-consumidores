@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Semaphore;
@@ -26,9 +25,6 @@ public class VisualizacaoBuffer extends JFrame implements Runnable, ActionListen
     public static volatile int[] buffer = {0, 0, 0, 0, 0};
     public static volatile boolean[] produtoresVivos = {true, true, true}, consumidoresVivos = {true, true};
     public static Semaphore semaforo = new Semaphore(5);
-
-    public synchronized void mostrarBuffer() {
-    }
 
     public VisualizacaoBuffer() {
         criarComponentes();
@@ -88,26 +84,17 @@ public class VisualizacaoBuffer extends JFrame implements Runnable, ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();
-        if (comando.equals("startP1")) {
-            produtoresVivos[0] = true;
-        } else if (comando.equals("stopP1")) {
-            produtoresVivos[0] = false;
-        } else if (comando.equals("startP2")) {
-            produtoresVivos[1] = true;
-        } else if (comando.equals("stopP2")) {
-            produtoresVivos[1] = false;
-        } else if (comando.equals("startP3")) {
-            produtoresVivos[2] = true;
-        } else if (comando.equals("stopP3")) {
-            produtoresVivos[2] = false;
-        } else if (comando.equals("startC1")) {
-            consumidoresVivos[0] = true;
-        } else if (comando.equals("stopC1")) {
-            consumidoresVivos[0] = false;
-        } else if (comando.equals("startC2")) {
-            consumidoresVivos[1] = true;
-        } else if (comando.equals("stopC2")) {
-            consumidoresVivos[1] = false;
+        switch (comando) {
+            case "startP1" -> produtoresVivos[0] = true;
+            case "stopP1" -> produtoresVivos[0] = false;
+            case "startP2" -> produtoresVivos[1] = true;
+            case "stopP2" -> produtoresVivos[1] = false;
+            case "startP3" -> produtoresVivos[2] = true;
+            case "stopP3" -> produtoresVivos[2] = false;
+            case "startC1" -> consumidoresVivos[0] = true;
+            case "stopC1" -> consumidoresVivos[0] = false;
+            case "startC2" -> consumidoresVivos[1] = true;
+            case "stopC2" -> consumidoresVivos[1] = false;
         }
     }
 }
